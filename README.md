@@ -4,11 +4,7 @@
 ![Docker](https://img.shields.io/badge/docker-v3+-blue.svg)
 ![Python](https://img.shields.io/badge/python-v3+-blue.svg)
 
-This repo is part of the development of the following Master Thesis [Named entity recognition and normalization in biomedical literature: a practical case in SARS-CoV-2 literature](https://oa.upm.es/67933/)
-
-## Basic Overview
-Biomedical Named Entity Recognition and Normalization of Diseases, Chemicals and Genenetic entity classes through the use of state-of-the-art models.
-The core piece in the modelling of the text entities recognition will be [BioBERT](https://github.com/dmis-lab/biobert-pytorch). Normalization step will be achived through inverse index search in a Solr database.
+Biomedical Named Entity Recognition and Normalization of Diseases, Drugs, Genes and Proteins entity classes through the use of state-of-the-art techniques. It is based on the [BioBERT](https://github.com/dmis-lab/biobert-pytorch) language model to identify entities. Normalization step is performed through inverse index search in a Solr database.
 
 ## System Set-up
 Package bionlp is mainly proposed to be used as part of the webpage or the annotation of CORD-19. In its dockerized versions these requirements are already satisfied. If it was desired to use it separately, the following dependencies must be satisfied:
@@ -20,15 +16,8 @@ Package bionlp is mainly proposed to be used as part of the webpage or the annot
 bionlp package can be found on [bio-nlp/bionlp](https://github.com/librairy/bio-ner/tree/master/bionlp)
 
 ## Solr Database for Normalization
-Solr Database is available online at:
- * Diseases: http://librairy.linkeddata.es/solr/#/bioner-diseases/core-overview
- * Chemicals: http://librairy.linkeddata.es/solr/#/bioner-diseases/core-overview
- * Genetics: http://librairy.linkeddata.es/solr/#/bioner-diseases/core-overview
- * COVID: http://librairy.linkeddata.es/solr/#/bioner-diseases/core-overview
 
-The endopoint for normalization 'http://librairy.linkeddata.es/solr/' will be later passed as environment variable if it is desired to leverage this database. If this endpoint is not passed, the system will looked for the database by default in localhost. Customize endopints could be passed as enviromental variables for a customize Solr Database but schemas must agree with the ones which were proposed.
-
-If Solr database in localhost is desired to be used, this must be setup and populated in localhost before the following deployments since normalization step will need this database. Details about this configuration are found in [bio-nlp/Solr](https://github.com/librairy/bio-ner/tree/master/Solr).
+A Solr database must be setup and populated in localhost before the following deployments since normalization step will need this database. Details about this configuration are found in [bio-nlp/Solr](https://github.com/librairy/bio-ner/tree/master/Solr).
 
 ## Web Page
 Available at: [https://librairy.github.io/bio-ner/](https://librairy.github.io/bio-ner/).
@@ -75,7 +64,7 @@ If a GPU is not available, deployment can be done also on CPU. If it is the case
 2. `docker run --name webapp -it --network 'host' -e SOLR_URL="http://librairy.linkeddata.es/solr/" alvaroalon2/webapp_bionlp:cpu`
 
 ## CORD-19 Annotation
-The proposed system will be used in a practical case: Annotation of CORD-19 corpus which contains thousands of COVID-19 related articles. For this purpose, the corpus will be previously pre-processed, to separate it on paragraphs, and loaded in a Solr database with the use of [https://github.com/librairy/cord-19](https://github.com/librairy/cord-19).
+The proposed system has been used in a real-world use-case: Processing of CORD-19 corpus which contains more than 300K coronavirus related articles. For this purpose, the corpus has been previously pre-processed, to separate it on paragraphs, and loaded in a Solr database with the use of [https://github.com/librairy/cord-19](https://github.com/librairy/cord-19).
 In order to ease the use of this annotation the use of the dockerized version is recommended. The repository on Docker Hub for this docker image can be found on:[https://hub.docker.com/r/alvaroalon2/bionlp_cord19_annotation](https://hub.docker.com/r/alvaroalon2/bionlp_cord19_annotation). Docker image includes the models within the image. If it was not wanted to use the provided online Solr database endpoint 'http://librairy.linkeddata.es/solr/', then the environment variable should not be passed in docker run.
 
 ### GPU Support
